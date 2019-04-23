@@ -1,0 +1,37 @@
+<div ng-init="find(false)">
+    <div class="loading-div" ng-if="loading" style="float:right; padding:72px;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="256"></md-progress-circular>
+    </div>
+    <md-button class="md-icon-button" ng-if="!loading" ng-confirm-click="Are you sure you want to pull the remote copy? (this action can't be undone)" confirmed-click="find(true)" style="float:left;">
+      <md-tooltip  md-direction="right">{{texts.refresh}}</md-tooltip>
+      <ng-md-icon icon="refresh" size="32"></ng-md-icon>
+    </md-button>
+    <md-button ng-if="changed && !loading" class="md-icon-button" style="fill: #D60808; padding: 12px;">
+      <md-tooltip md-direction="right">{{texts.out_of_sync}}</md-tooltip>
+      <ng-md-icon icon="fiber_manual_record" size="12"></ng-md-icon>
+    </md-button>
+    <md-button class="md-icon-button" ng-show="!loading" href="#!/settings" style="float:right;">
+      <md-tooltip  md-direction="left">{{texts.settings}}</md-tooltip>
+      <ng-md-icon icon="settings" size="32"></ng-md-icon>
+    </md-button><br><br>
+    <div ng-if="!changed">
+      <br><br>
+    </div>
+    <md-divider ng-if="!loading"></md-divider>
+    <md-input-container ng-show="!loading" style="margin: 20px;" class="md-block">
+      <label>{{texts.search_agent}}</label>
+      <input ng-model="search">
+    </md-input-container>
+    <md-list-item ng-href="#!/activeCoachingInstances/{{coachee}}" class="md-3-line" ng-repeat="coachee in coachees | filter:search | orderBy: daysSinceLastCoachingSession : true" ng-click="null">
+      <md-divider></md-divider>
+      <img ng-src="http://moma-teams-photos.corp.google.com/photos/{{coachee}}?sz=212" class="md-avatar" alt="{{coachee}}">
+      <div class="md-list-item-text" layout="column">
+        <h3>{{coachee}}</h3>
+        <small>{{lastCoachingSessionText(coachee)}}</small>
+      </div>
+      <md-button class="md-icon-button" ng-show="daysSinceLastCoachingSession(coachee) > 7" style="float:right;">
+        <md-tooltip md-direction="left">{{texts.last_session}}</md-tooltip>
+        <ng-md-icon icon="error_outline" size="32"></ng-md-icon>
+      </md-button>
+    </md-list-item>
+</div>

@@ -1,0 +1,31 @@
+.container {
+  height: 600px;
+  width:  400px;
+}
+
+.coaching-instance {
+  margin: 20px;
+}
+
+.settings-panel {
+  margin: 20px;
+}
+
+.md-icon-button {
+  fill: #666666;
+}
+
+.md-calendar-scroll-container{
+  width:100% !important;
+}
+
+.large-text {
+  font-size: medium;
+}
+
+.editable-wrap .editable-input {
+   display: block;
+   width: 100%
+}
+
+md-progress-circular svg path { stroke: #666666; }

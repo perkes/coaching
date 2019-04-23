@@ -1,0 +1,38 @@
+<div class="settings-panel" ng-init="init()">
+  <md-button style="margin:16px;" class="md-icon-button" href="#!/coachees">
+    <md-tooltip md-direction="right">{{texts.tooltip_back}}</md-tooltip>
+    <ng-md-icon icon="keyboard_arrow_left" size="32"></ng-md-icon>
+  </md-button>
+  <md-divider></md-divider>
+  <md-input-container class="md-block">
+    <h3 ng-class="{'large-text': large_text}">{{texts.large_text}}</h3>
+    <md-switch aria-label="large text switch" ng-class="{'large-text': large_text}" class="md-primary md-block" ng-model="large_text" ng-change="onChange()">
+      {{message}}
+    </md-switch>
+  </md-input-container>
+  <md-input-container>
+    <h3 ng-class="{'large-text': large_text}">{{texts.theme}}</h3>
+    <md-select aria-label="theme selector" ng-class="{'large-text': large_text}" ng-model="theme" md-on-close="switchTheme()">
+      <md-option ng-repeat="t in themes" value="{{t}}">
+        {{t}}
+      </md-option>
+    </md-select>
+  </md-input-container>
+  <div class="md-block">
+    <h3 ng-class="{'large-text': large_text}">{{texts.about_label}}</h3>
+    <p ng-class="{'large-text': large_text}">{{texts.extension_name}}<p>
+    <p ng-class="{'large-text': large_text}">{{version}}</p>
+    <small>{{texts.about}}</small>
+  </div><br>
+  <md-button class="md-primary md-raised" ng-click="show_advanced = show_advanced ? false : true;">
+    <md-tooltip md-direction="top">{{texts.dont_click}}</md-tooltip>
+    {{texts.toggle_advanced}}
+  </md-button>
+  <md-input-container ng-if="show_advanced" class="md-block">
+    <md-tooltip ng-class="{'large-text': large_text}" md-direction="top">{{texts.seriously_dont}}</md-tooltip>
+    <h3 ng-class="{'large-text': large_text}">{{texts.script_id}}</h3>
+    <a href="#" ng-class="{'large-text': large_text}" editable-text="script_id" ng-model="script_id" onaftersave="updateScriptID()">
+      {{texts.replace_script_id}}
+    </a>
+  </md-input-container>
+</div>

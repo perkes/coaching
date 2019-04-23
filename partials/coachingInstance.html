@@ -1,0 +1,104 @@
+<div class="coaching-instance" ng-init="findOne()">
+  <md-button class="md-icon-button" ng-href="#!/activeCoachingInstances/{{coaching_instance.ldap}}">
+    <md-tooltip ng-class="{'large-text': large_text}" md-direction="right">{{texts.tooltip_back}}</md-tooltip>
+    <ng-md-icon icon="keyboard_arrow_left" size="32"></ng-md-icon>
+  </md-button>
+  <div class="loading-div" ng-show="deleted" style="float:right; padding:8px;">
+      <md-progress-circular md-mode="indeterminate" md-diameter="24"></md-progress-circular>
+  </div>
+  <md-button class="md-icon-button" ng-show="!deleted" style="float:right;" ng-confirm-click="{{texts.are_you_sure_delete}}" confirmed-click="remove()">
+    <md-tooltip md-direction="left">{{texts.tooltip_delete}}</md-tooltip>
+    <ng-md-icon icon="delete_forever" size="32"></ng-md-icon>
+  </md-button><br><br>
+  <md-divider></md-divider><br></br>
+  <div class="md-block">
+    <p aria-label="agent" ng-class="{'large-text': large_text}">{{texts.agent}}</p>
+    <p aria-label="ldap" ng-class="{'large-text': large_text}"><b>{{coaching_instance.ldap}}</b></p>
+  </div>
+  <md-input-container class="md-block">
+    <p aria-label="session date" ng-class="{'large-text': large_text}">{{texts.session_date}}</p>
+    <md-datepicker ng-class="{'large-text': large_text}" ng-model="coaching_instance.session_date" ng-change="coaching_instance.session_date = formatDate(coaching_instance.session_date); update('session_date');"></md-datepicker>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <p aria-label="type of meeting" ng-class="{'large-text': large_text}">{{texts.type_of_meeting_label}}</p>
+    <md-select aria-label="select type of meeting" ng-model="coaching_instance.type_of_meeting" ng-change="update('type_of_meeting')">
+      <md-option ng-class="{'large-text': large_text}" ng-value="opt" ng-repeat="opt in texts.type_of_meeting">{{opt}}</md-option>
+    </md-select>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <p aria-label="kudos" ng-class="{'large-text': large_text}">{{texts.kudos}}</p>
+    <md-select aria-label="select kudos" ng-model="coaching_instance.kudos" ng-change="update('kudos')">
+      <md-option ng-class="{'large-text': large_text}" ng-value="opt" ng-repeat="opt in ['Yes', 'No']">{{opt}}</md-option>
+    </md-select>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <p aria-label="competencies" ng-class="{'large-text': large_text}">{{texts.select_competencies}}</p>
+    <md-select aria-label="select competencies" ng-model="coaching_instance.competencies" ng-change="update('competencies')">
+      <md-option ng-class="{'large-text': large_text}" ng-value="key" ng-repeat="(key, value) in texts.competencies">{{key}}</md-option>
+    </md-select>
+  </md-input-container>
+  <md-input-container ng-show="coaching_instance.competencies && coaching_instance.type_of_meeting != texts.type_of_meeting[texts.type_of_meeting.length-1]" class="md-block">
+    <p aria-label="skills" ng-class="{'large-text': large_text}">{{texts.skills}}</p>
+    <md-select aria-label="select skills" ng-model="coaching_instance['skills_' + coaching_instance.competencies.split(' ').join('_').toLowerCase()]" ng-change="update('skills_' + coaching_instance.competencies.split(' ').join('_').toLowerCase())">
+      <md-option ng-class="{'large-text': large_text}" ng-value="key" ng-repeat="(key, value) in texts.competencies[coaching_instance.competencies]">{{key}}</md-option>
+    </md-select>
+  </md-input-container>
+  <md-input-container ng-show="coaching_instance.competencies && coaching_instance.type_of_meeting != texts.type_of_meeting[texts.type_of_meeting.length-1]" class="md-block">
+    <p aria-label="root cause" ng-class="{'large-text': large_text}">{{texts.root_cause_label}}</p>
+    <md-select aria-label="select root cause" ng-model="coaching_instance['root_cause_' + coaching_instance.competencies.split(' ').join('_').toLowerCase()]" ng-change="update('root_cause_' + coaching_instance.competencies.split(' ').join('_').toLowerCase())">
+      <md-option ng-class="{'large-text': large_text}" ng-class="{'large-text': large_text}" ng-value="root_cause" ng-repeat="root_cause in texts.root_cause">{{root_cause}}</md-option>
+    </md-select>
+  </md-input-container><br>
+  <div ng-show="coaching_instance['skills_' + coaching_instance.competencies.split(' ').join('_').toLowerCase()] && coaching_instance.type_of_meeting != texts.type_of_meeting[texts.type_of_meeting.length-1]">
+    <h3 aria-label="how" ng-class="{'large-text': large_text}">{{texts.general_comments}}</h3>
+    <a aria-label="fill comments" href="#" ng-class="{'large-text': large_text}" editable-textarea="coaching_instance.comments" e-formclass="clss1" e-rows="4" e-cols="45" ng-model="coaching_instance.comments" submit-on-enter="true" onaftersave="update('comments')">
+      {{coaching_instance.comments || texts.enter_text}}
+    </a>
+  </div><br>
+  <div ng-show="false">
+    <md-input-container ng-show="coaching_instance['skills_' + coaching_instance.competencies.split(' ').join('_').toLowerCase()] && coaching_instance.type_of_meeting != texts.type_of_meeting[texts.type_of_meeting.length-1]">
+      <h3 aria-label="questions" ng-class="{'large-text': large_text}">{{coaching_instance['skills_' + coaching_instance.competencies.split(' ').join('_').toLowerCase()]}}</h3>
+      <div aria-label="fill question" ng-repeat="question in texts.competencies[coaching_instance.competencies][coaching_instance['skills_' + coaching_instance.competencies.split(' ').join('_').toLowerCase()]]">
+        <p aria-label="fill question" ng-class="{'large-text': large_text}">{{question['text']}}</p>
+        <a aria-label="fill question" href="#" ng-class="{'large-text': large_text}" editable-textarea="coaching_instance[question['id']]" e-formclass="clss1" submit-on-enter="true" e-rows="4" e-cols="45" ng-model="coaching_instance[question['id']]" onaftersave="update(question['id'])">
+          {{coaching_instance[question['id']] || texts.enter_text}}
+        </a>
+      </div>
+    </md-input-container>
+  </div><br>
+  <div ng-show="coaching_instance.competencies && coaching_instance.type_of_meeting == texts.type_of_meeting[1]">
+    <h3 aria-label="smart goal" ng-class="{'large-text': large_text}">{{texts.smart_goal_label}}</h3>
+    <div>
+      <p aria-label="what" ng-class="{'large-text': large_text}">{{texts.smart_goal[1]}}</p>
+      <a aria-label="fill what" href="#" ng-class="{'large-text': large_text}" editable-textarea="coaching_instance.smart_goal_what" e-formclass="clss1" e-rows="4" e-cols="45" ng-model="coaching_instance.smart_goal_what" submit-on-enter="true" onaftersave="update('smart_goal_what')">
+        {{coaching_instance.smart_goal_what || texts.enter_smart_goal}}
+      </a>
+    </div><br>
+    <div>
+      <p aria-label="how" ng-class="{'large-text': large_text}">{{texts.smart_goal[2]}}</p>
+      <a aria-label="fill how" href="#" ng-class="{'large-text': large_text}" editable-textarea="coaching_instance.smart_goal_how" e-formclass="clss1" e-rows="4" e-cols="45" ng-model="coaching_instance.smart_goal_how" submit-on-enter="true" onaftersave="update('smart_goal_how')">
+        {{coaching_instance.smart_goal_how || texts.smart_goal_steps}}
+      </a>
+    </div><br>
+    <div>
+        <p aria-label="fup" ng-class="{'large-text': large_text}">{{texts.smart_goal[0]}}</p>
+        <md-datepicker ng-class="{'large-text': large_text}" ng-model="coaching_instance.smart_goal_fup_date" ng-change="coaching_instance.smart_goal_fup_date = formatDate(coaching_instance.smart_goal_fup_date); update('smart_goal_fup_date');"></md-datepicker>
+    </div><br>
+    <div>
+      <md-button class="md-primary md-raised" ng-disabled="!coaching_instance.smart_goal_how || !coaching_instance.smart_goal_what || !coaching_instance.smart_goal_fup_date" ng-confirm-click="{{texts.are_you_sure_send_report}}" confirmed-click="sendEmailReport()">
+        <md-tooltip md-direction="top">{{texts.send_report_explanation}}</md-tooltip>
+        {{texts.send_report}}
+      </md-button>
+      <p layout-padding>{{send_report_label}}</p>
+    </div>
+  </div>
+  <div ng-show="coaching_instance.competencies == 'Other (For 1:1 Meeting only)'">
+    <h3 ng-class="{'large-text': large_text}">{{texts.one_on_one}}</h3>
+    <div class="md-3-line" ng-repeat="question in texts.competencies[coaching_instance.competencies]">
+      <p ng-class="{'large-text': large_text}">{{question['text']}}</p>
+      <a aria-label="one on one question" href="#" ng-class="{'large-text': large_text}" editable-textarea="coaching_instance[question['id']]" e-rows="4" e-cols="45" ng-model="coaching_instance[question['id']]" submit-on-enter="true" onaftersave="update(question['id'])">
+        {{coaching_instance[question['id']] || texts.enter_text}}
+      </a>
+    </div><br>
+  </div>
+</div>

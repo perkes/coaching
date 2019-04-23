@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Coaching",
+  "description": "Coaching",
+  "version": "0.2.1",
+  "browser_action": {
+    "default_icon": {
+      "48": "img/icon48.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": "script-src 'self' https://script.google.com/ https://script.googleusercontent.com/; object-src 'self'",
+  "permissions": [
+    "identity",
+    "identity.email",
+    "storage"
+  ],
+  "oauth2": {
+    "client_id": "536214268011-2l9cmlspel4auak9sl7t78dvj0d2sgh6.apps.googleusercontent.com",
+    "scopes": [
+      "profile"
+    ]
+  },
+  "key":"MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDLBubEy2nPFGNbblo+mJ4RPnLMrB/n0PQyYs8fE9x4eIHnnT4EQPuFGFeKj2Zh7Xx9F78oieZi16We+m6PAnvpUuXQjgV0DR8hXgYxT/sg2vPK42V6gYe2zpsAFchXSZEdgtw4MtzzYn+qr1T7kDRyHWhv5wJqIYATylbuCEHe3VFFd41aXtzDmA5HpL78PoOzPoCmAQ2Kp5kyjFh/03VZFPsa0ZOSk0QrcSypHcnlO7unWvzHNrDL6WGCQ8JKxiROUmtkkLQWZlwlZOoo1uDZSmU+pAaQ7fJ2zk7/rWR4GNSeXQaJYGTlBAPgmT2BWB40Z53w3xVblCMJUdVWXiWRAgMBAAECggEAA5ShhCPdf8nBcxTKFgenZYDVQdlxBlvJu7wBAMB/G1eOPHNKK0VpXix6ykJ7TPO1Fehx3k1YzSJWHRy375Ec1fWIoK4Jh/V9iJ9NswfQ4zBjW28ZXIDNb76a7pRjxDDTpKpot3vDqG3yuBQXpshhOWg9/de8U9p3hZnUYMYv4bYb13jZbpWMbYoOoPLa7chVEM+Gl9Xh2k47vTEatewxelrYmFmZZoPu4hS+xGbWXqvze93b50oRF7zFLPY+mm0ZzsALFVVs+NS6HUFdrf146H5LaYznjZ4yJfoNOy+3kcXxJRG2txZMNK4M9AsAFdJzGvu0ZtjCe3ZncXRgiEM3YQKBgQDsPBbdNP38poCC2ub65SB/kWKDhxEjIt1gbU7XBuSWgexteJ2SaEU4kkga4j7Y6kSX5WrzV+BPKSHF6p3Hp5Xddk0MLgu3Bk30EARR6AY7J1hN6oqdOWO/R/9ko1Bmjno/cLvxHd0PQxl8Va0HmUccwJ6Eu//ffDbIzv8V9GjMIQKBgQDcA4j+H/vjNXkSy4AtdgJSc9FZ1Lra35i1g145hiIK64TeteoG7SCtJNKOX56w23FeBZwWhnnN4/u38mvWafGc2y66+nBEVuLjNS3jWycF21G55PdSG7lfn1X6UxJ5KN2vDGjU5mUpM4CZtjTYL8skUvNGrvk+4G2VZZE5a4KrcQKBgAoYs11281gGAb4V/wNAIbhyDUTT0/6tccq6QUFdcQ2hteoj2pA0VqkJT32ep9L7iDz5uC14VwTrHB9qXJ344qXZdYeMvEFxSomg2Z5qjUGf9900pgH8PvAg8qBpfnkzo7PsbIvsm9MYKhGvU7rcaTaoYN4JbvEtTOYeOrbEgGohAoGBAMCBe1lXpO8t940BcFrWubtpSVF/eCtQn26azlQo0Bqb7rtrkqSS0ReOc4lNky2OJMiuwd9XtLX4+GQAAmkuc9DaWy4ROTAikg1Zl5gqRp+yQfUUqW43geBwKyuHik9m+WlTw1odaYA+ZxSXv+81ClrzFZfQO5fPiTLCFuqV7lSRAoGANJeuFCVS59KFEhUNvPJSYeFmvEUsKq9NNYgt5cgfIGShGNBT3CfJPoQE+9574WsLeNNiaKPB/hLOvBazy0DnVz57gPdH/7pDx9OzkY5gv/Y8jMdcB2XJv9NTM+d4xUqgBrYv1agqGh73m9KN1egrRHWAL4NaUDCZC84l4V6F05E="
+}
