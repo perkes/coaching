@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Coaching",
   "description": "Coaching",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "browser_action": {
     "default_icon": {
       "48": "img/icon48.png"

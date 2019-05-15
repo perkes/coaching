@@ -28,7 +28,7 @@ angular.module('coaching')
       $scope.changed = false;
       // Every two seconds the controller updates the value
       // of the local changed variable with the one in
-      // localStorage, which in turn is updated every 15 secodns
+      // localStorage, which in turn is updated every 15 seconds
       // after checking if the local copy is equal or not to the
       // remote copy.
       $interval(function() {
@@ -54,27 +54,26 @@ angular.module('coaching')
       // since the last coaching sessions for a given coachee.
       $scope.daysSinceLastCoachingSession = function (ldap) {
         var instances = Coaching.getAllInstances(ldap);
-        if (Object.keys(instances).length > 0)
-        {
-          var last_coaching_session_date = new Date(instances[Object.keys(instances)[0]]['timestamp']).getTime();
+        var last_coaching_session_date = 0;
 
-          for (var id in instances) {
-            if (instances.hasOwnProperty(id)) {
-              var instance = instances[id];
-              var session_date = new Date(instance['timestamp']).getTime();
-              if (instance['type_of_meeting'] != '1:1 Meeting' && (!instance['smart_goal_what'] || !instance['smart_goal_how'] || !instance['smart_goal_fup_date']))
+        for (var id in instances) {
+          if (instances.hasOwnProperty(id)) {
+            var instance = instances[id];
+            // If it's an opportunity meeting but any of the smart goal fields was not completed, this meeting should not be counted.
+            if (instance['type_of_meeting'] == 'Opportunity' && (!instance['smart_goal_what'] || !instance['smart_goal_how'] || !instance['smart_goal_fup_date'])) {
                 continue;
-              if (session_date > last_coaching_session_date) {
-                last_coaching_session_date = session_date;
-              }
+            }
+            var session_date = new Date(instance['session_date']).getTime();
+            if (session_date > last_coaching_session_date) {
+              last_coaching_session_date = session_date;
             }
           }
-
-          var difference = new Date().getTime() - last_coaching_session_date;
-          return Math.floor(difference/1000/60/60/24);
-        } else {
-          return Number.POSITIVE_INFINITY;
         }
+
+        if (last_coaching_session_date == 0)
+          return Number.POSITIVE_INFINITY;
+        var difference = new Date().getTime() - last_coaching_session_date;
+        return Math.floor(difference/1000/60/60/24);
       };
 
       $scope.lastCoachingSessionText = function(ldap) {

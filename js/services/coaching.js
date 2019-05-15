@@ -154,6 +154,11 @@ angular.module('coaching')
         then(function(response) {
           var new_instance = response.data.new_instance;
           new_instance['id'] = new Date(new_instance['timestamp']).getTime() + new_instance['email'];
+          var date = new Date();
+          var day = date.getDate();
+          var monthIndex = date.getMonth();
+          var year = date.getFullYear();
+          new_instance['session_date'] = (monthIndex + 1) + '/' + day + '/' + year;
           coaching_instances[new_instance['id']] = new_instance;
           defer.resolve(new_instance);
         });

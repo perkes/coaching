@@ -11,7 +11,7 @@
       <ng-md-icon icon="add" size="32"></ng-md-icon>
     </md-button><br><br>
     <md-divider></md-divider>
-    <md-list-item ng-href="#!/coachingInstance/{{coaching_instance.id}}" class="md-3-line" ng-repeat="coaching_instance in active_coaching_instances | orderBy: 'dateToUnixTimestamp(timestamp)' : true" ng-click="null">
+    <md-list-item ng-href="#!/coachingInstance/{{coaching_instance.id}}" class="md-3-line" ng-repeat="coaching_instance in active_coaching_instances | orderBy: 'dateToUnixTimestamp(session_date)' : true" ng-click="null">
       <md-divider></md-divider>
       <img ng-src="http://moma-teams-photos.corp.google.com/photos/{{coaching_instance.ldap}}?sz=212" class="md-avatar" alt="{{coaching_instance.agent_ldap}}">
       <div class="md-list-item-text" layout="column">
@@ -20,9 +20,9 @@
       </div>
       <div class="md-list-item-text" layout="column">
         <p><b>Coach:</b> {{coaching_instance.email.split('@')[0]}}</p>
-        <small ng-class="{'large-text': large_text}">{{coaching_instance.timestamp | date:'yyyy-MM-dd HH:mm:ss'}}</small>
+        <small ng-class="{'large-text': large_text}">{{coaching_instance.session_date | date:'yyyy-MM-dd'}}</small>
       </div>
-      <md-button class="md-icon-button" ng-show="coaching_instance.type_of_meeting != texts.type_of_meeting[texts.type_of_meeting.length-1] && (!coaching_instance.smart_goal_fup_date || !coaching_instance.smart_goal_what || !coaching_instance.smart_goal_how)" style="float:right;">
+      <md-button class="md-icon-button" ng-show="coaching_instance.type_of_meeting == 'Opportunity' && (!coaching_instance.smart_goal_fup_date || !coaching_instance.smart_goal_what || !coaching_instance.smart_goal_how)" style="float:right;">
         <md-tooltip md-direction="left">{{texts.tooltip_incomplete}}</md-tooltip>
         <ng-md-icon icon="error_outline" size="32"></ng-md-icon>
       </md-button>
